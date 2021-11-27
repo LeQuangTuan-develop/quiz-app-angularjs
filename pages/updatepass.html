@@ -1,0 +1,75 @@
+<div class="form-update-pass d-flex justify-content-center">
+    <div class="col-md-4">
+        <form name="frmUpdatePass" novalidate ng-submit="frmUpdatePass.$valid && handleSubmit()">
+            <h3 class="text-center mb-5">Cập nhật mật khẩu</h3>
+            <div class="form-floating mb-3">
+                <input 
+                    type="password" 
+                    class="form-control" 
+                    name="oldpass" 
+                    id="floatingInput" 
+                    placeholder="name@example.com"
+                    ng-model="oldpass"
+                    required
+                    ng-change="clearErrorOldPass()"
+                >
+                <label for="floatingInput">Nhập mật khẩu cũ</label>
+                <span class="text-danger" ng-show="frmUpdatePass.oldpass.$invalid && frmUpdatePass.$submitted">Vui lòng nhập mật khẩu cũ của bạn</span>
+                <span class="text-danger" ng-show="checkOldPass === false">Bạn đã nhập sai mật khẩu</span>
+            </div>
+            <div class="form-floating mb-3">
+                <input 
+                    type="password" 
+                    class="form-control" 
+                    name="newpass" 
+                    id="newPassword" 
+                    placeholder="Password"
+                    ng-model="newpass"
+                    required
+                    ng-minlength="6"
+                >
+                <label for="newPassword">Nhập mật khẩu mới</label>
+                <span class="text-danger" ng-show="frmUpdatePass.newpass.$invalid && frmUpdatePass.$submitted">Vui lòng nhập mật khẩu mới tối thiểu 6 ký tự</span>
+            </div>
+            <div class="form-floating mb-3">
+                <input 
+                    type="password" 
+                    name="confirmNewPass" 
+                    class="form-control" 
+                    id="confirmNewPassword" 
+                    placeholder="Password"
+                    ng-model="confirmNewPass"
+                    required
+                >
+                <label for="confirmNewPassword">Nhập lại mật khẩu mới</label>
+                <span class="text-danger" ng-show="newpass !== confirmNewPass && frmUpdatePass.$submitted">Mật khẩu nhập lại không trùng khớp</span>
+            </div>
+
+            <div class="d-grid">
+                <button class="btn btn-lg btn-info text-white btn-login text-uppercase fw-bold mb-2" type="submit">Cập nhật</button>
+                <div class="text-center">
+                    <a class="small" href="#!resetpass">Quên mật khẩu?</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cập nhật mật khẩu thành công</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn đã cập nhật mật khẩu thành công!!!
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-confirm btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

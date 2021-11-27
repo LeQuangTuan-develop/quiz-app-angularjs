@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <div class="nav-left">
+        <a class="navbar-brand" href="#"><i class="bi bi-apple" style="font-size: 2rem; color: #000"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <span class="slogan">Học là trải nghiệm</span>
+    </div>
+    <div class="nav-middle">
+        <div class="search">
+            <input type="text" class="searchTerm" placeholder="Tìm kiếm môn học">
+            <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <div class="nav-right">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <a href="http://127.0.0.1:5500/asm/signin.html" class="btn btn-info me-2" style="text-decoration: none;" ng-show="!user">Đăng nhập</a>
+            <a href="http://127.0.0.1:5500/asm/signup.html" class="btn btn-outline-info" style="text-decoration: none;" ng-show="!user">Đăng ký</a>
+            <div class=" nav-item dropdown" ng-show="user">
+                <a class="nav-link nav-title dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{{ user.avatar || 'https://p.kindpng.com/picc/s/22-223965_no-profile-picture-icon-circle-member-icon-png.png' }}" alt="" class="avatar">
+                    <span>{{ user.username }}</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!account">Quản lý tài khoản</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
+                    <li><a class="dropdown-item" href="#">Cập nhật hồ sơ</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Điểm</a></li>
+                    <li><a class="dropdown-item" href="#">Lịch sử hoạt động</a></li>
+                    <li><a class="dropdown-item" href="#" ng-click="logout()">Đăng xuất</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

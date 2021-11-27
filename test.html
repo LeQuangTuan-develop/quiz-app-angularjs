@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="./vendor/bootstrap-5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./vendor/font-awesome-pro-5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./css/quiz.css">
+    <title>Quiz</title>
+</head>
+
+<body ng-app="test" ng-controller="testController">
+    <div class="d-flex">
+        <div class="col-md-9">
+            <h3 class="text-center text-white mt-5 h4">{{ name }}</h3>
+            <div class="done h5 mt-2 text-center text-warning" ng-if="count >= 0">Điểm: {{ count }}/{{quizs.length}}</div>
+            <div class="container mt-sm-5 my-1">
+                <div class="question ms-sm-5 ps-sm-5 pt-2">
+                    <form>
+                        <div class="py-2 h5 d-flex justify-content-between align-items-center">
+                            <b>{{index + 1}}. {{ curQuiz.Text }}</b>
+                            <div class="pageNum">({{ index + 1 }}/{{quizs.length}})</div>
+                        </div>
+                        <div class="ms-md-3 ms-sm-3 ps-md-2 pt-sm-0 pt-3" id="options">
+                            <label class="options" ng-repeat="q in curQuiz.Answers">
+                                <span class="{{ count >= 0 &&  (q.Id === answer.answer ? (q.Id === curQuiz.AnswerId ? 'text-info' : 'text-danger') : '') }} 
+                                    {{ count >= 0 && q.Id === curQuiz.AnswerId && 'text-info'}}">{{q.Text}}</span>
+                                <input 
+                                    type="radio" 
+                                    name="radio" 
+                                    value="{{q.Id}}" 
+                                    ng-model="answer"
+                                    ng-checked="q.Id === answer.answer" 
+                                    ng-change="selectRadio({{q.Id}})"
+                                    ng-disabled="count >= 0"
+                                >
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="d-flex align-items-center pt-3">
+                    <div id="prev">
+                        <button class="btn btn-primary" ng-click="prev()">Quay lại</button>
+                    </div>
+                    <div class="ms-auto">
+                        <button class="btn btn-success" ng-click="next()">Tiếp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="list-quizs-container">
+                <div class="h3 watch-box">
+                    <div class="watch py-2 d-flex justify-content-between align-items-center">
+                        <div id="clock" class="ms-3">
+                            <p class="unit" id="minutes">{{ m }}</p>
+                            <p class="unit" id="minutes">:</p>
+                            <p class="unit" id="seconds">{{ s }}</p>
+                        </div>
+                        <div class="done h5 mt-2 text-light">{{ done }}/{{quizs.length}}</div>
+                        <button class="btn btn-success me-3" ng-click="handleSubmit()">Nộp bài</button>
+                    </div>
+                </div>
+                <ul class="list-group list-quizs px-0">
+                    <button type="button"
+                        class="list-group-item list-group-item-action {{q.selected && 'list-group-item-info'}} 
+                        {{ count >= 0 && (q.result ? '' : 'list-group-item-danger') }}"
+                        ng-repeat="q in quizs" ng-click="direct($index)">
+                        <p class="question-item mb-0">{{ $index + 1 }}. {{ q.Text }}</p>
+                    </button>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Kết quả</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="img-box d-flex justify-content-center">
+                        <img src="./images/success.png" alt="" class="img-success mb-4">
+                    </div>
+                    <p>Chúc mừng bạn đã hoàn thành bài thi trắc nghiệm!!!</p>
+                    <p>Số điểm bạn đạt được là: <strong class="h5">{{ count }}/{{quizs.length}}</strong></p>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info" data-bs-dismiss="modal">Xem kết quả</button>
+                    <a href="http://127.0.0.1:5500/asm/index.html#!/home" class="btn btn-primary">Trang chủ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./vendor/bootstrap-5/js/bootstrap.min.js"></script>
+    <script src="./js/storage.js"></script>
+    <script>
+        var app = angular.module("test", [])
+        app.controller("testController", ($scope, $http, $timeout) => {
+            let subject = getQuiz()
+            $scope.name = subject.Name
+            $scope.answers = []
+            $scope.answer = null
+            $scope.quizs = []
+            $scope.curQuiz = {}
+            $scope.index = 0
+            $scope.done = 0
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                keyboard: false
+            })
+
+            $http.get(`db/Quizs/${subject.Id}.js`).then(
+                function (d) {
+                    $scope.quizs = d.data;
+                    $scope.curQuiz = $scope.quizs[0]
+                },
+                function (e) { alert('Lỗi: ' + e.statusText) }
+            )
+            $scope.next = () => {
+                if ($scope.index < $scope.quizs.length - 1) {
+                    $scope.index++
+                    $scope.curQuiz = $scope.quizs[$scope.index]
+                }
+                findAnswer()
+            }
+            $scope.prev = () => {
+                if ($scope.index > 0) {
+                    $scope.index--
+                    $scope.curQuiz = $scope.quizs[$scope.index]
+                }
+                findAnswer()
+            }
+            $scope.direct = (index) => {
+                $scope.index = index
+                $scope.curQuiz = $scope.quizs[$scope.index]
+                findAnswer()
+            }
+            $scope.selectRadio = (idAnswer) => {
+                let checkQuiz = $scope.answers.find(a => a.Id === $scope.quizs[$scope.index].Id)
+                if (checkQuiz) {
+                    let i = $scope.answers.indexOf(checkQuiz)
+                    $scope.answers[i].answer = idAnswer
+                } else {
+                    $scope.answers.push({
+                        Id: $scope.quizs[$scope.index].Id,
+                        answer: idAnswer,
+                        answerId: $scope.quizs[$scope.index].AnswerId,
+                    })
+                }
+                
+                $scope.quizs[$scope.index].selected = true
+                if (idAnswer === $scope.quizs[$scope.index].AnswerId) 
+                    $scope.quizs[$scope.index].result = true
+                
+                $scope.done = $scope.quizs.filter(q => q.selected).length
+            }
+
+            function findAnswer() {
+                $scope.answer = $scope.answers.find(a => a.Id === $scope.quizs[$scope.index].Id)
+            }
+
+            $scope.handleSubmit = () => {
+                $scope.count = 0
+                $scope.answers.forEach(a => {
+                    if (a.answer === a.answerId) {
+                        $scope.count++
+                    }
+                });
+                stop()
+                myModal.show()
+            }
+
+            // handle clock
+            $scope.m = subject.time; 
+            $scope.s = "00"; 
+            let timer
+
+            function start() {
+                let second = Number($scope.s)
+                let minute = Number($scope.m)
+
+                if (second === -1) {
+                    minute -= 1;
+                    second = 59;
+                }
+
+                if (minute === -1) {
+                    alert('Hết giờ');
+                    return false;
+                }
+
+                strSecond = second.toString();
+                if (strSecond.length === 1)
+                    $scope.s = '0' + second
+                else 
+                    $scope.s = strSecond;
+
+                StrMinute = minute.toString()
+                if (minute.length === 1)
+                    $scope.m = '0' + minute
+                else
+                    $scope.m = StrMinute
+
+                timer = $timeout(function () {
+                    let second = Number($scope.s)
+                    second--;
+                    $scope.s = second.toString();
+
+                    start();
+                }, 1000);
+            }
+
+            function stop() {
+                $timeout.cancel(timer)
+                $scope.direct(0)
+            }
+
+            start()
+        })
+    </script>
+</body>
+
+</html>

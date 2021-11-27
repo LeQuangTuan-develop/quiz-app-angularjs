@@ -1,0 +1,125 @@
+<div class="px-5">
+    <div class="container rounded bg-white mt-5 mb-5">
+        <form name="frmAccount" novalidate ng-submit="frmAccount.$valid && handleSubmit()">
+            <div class="row">
+                <div class="col-md-3 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img class="rounded-circle mt-5 avatar-img"
+                            src="{{ user.avatar || 'https://p.kindpng.com/picc/s/22-223965_no-profile-picture-icon-circle-member-icon-png.png' }}">
+                        <span class="font-weight-bold">{{ user.username }}</span>
+                        <span class="text-black-50">{{ user.email }}</span>
+                        <div class="file-input mt-3">
+                            <input type="file" id="file" class="file">
+                            <label for="file" class="btn btn-info">Upload ảnh</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Thông tin tài khoản</h4>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="labels">Họ và tên <span class="text-danger h6">*</span></label>
+                                <input type="text" class="form-control" required placeholder="Nhập tên" required name="fullname"
+                                    ng-init="fullname = user.fullname" ng-model="fullname">
+                                <span class="text-danger" ng-show="frmAccount.fullname.$invalid && frmAccount.$submitted">Vui lòng nhập họ và
+                                    tên</span>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class="labels">Số điện thoại</label>
+                                <input type="text" class="form-control" placeholder="Nhập số điện thoại" name="phone"
+                                    ng-init="phone = user.phone" ng-minlength="10" ng-maxlength="11"  ng-model="phone">
+                                <span class="text-danger" ng-show="frmAccount.phone.$invalid && frmAccount.phone.$touched">Nhập số điện thoại từ 10 - 11 chữ số</span>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Lớp</label>
+                                <input type="text" class="form-control" placeholder="Nhập lớp"
+                                    ng-init="class = user.class" ng-model="class">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Chuyên ngành</label>
+                                <input type="text" class="form-control" placeholder="Nhập chuyên ngành"
+                                    ng-init="major = user.major" ng-model="major">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Giới tính <span class="text-danger h6">*</span></label>
+                                <div class="">
+                                    <input type="radio" id="gender-male" name="gender" value="male" ng-model="gender">
+                                      <label class="labels" for="gender-male">Nam</label>
+                                      <input type="radio" id="gender-female" name="gender" value="female"
+                                        ng-model="gender">
+                                      <label class="labels" for="gender-female">Nữ</label>
+                                      <input type="radio" id="gender-other" name="gender" value="other"
+                                        ng-model="gender">
+                                      <label class="labels" for="gender-other">khác</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Địa chỉ</label>
+                                <input type="text" class="form-control" placeholder="Nhập địa chỉ"  ng-init="address = user.address" ng-model="address">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">Thành phố</label>
+                                <input type="text" class="form-control" placeholder="thành phố" value="">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Quận/huyện</label>
+                                <input type="text" class="form-control" value="" placeholder="quận huyện">
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-info text-white btn-submit-form" type="submit">Lưu thông
+                                tin</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 py-5">
+                        <a class="d-flex justify-content-between align-items-center experience resetpass"
+                            href="#!updatepass">
+                            <!-- <span>Sửa mật khẩu</span> -->
+                            <span class="border px-3 p-1 add-experience">
+                                <i class="bi bi-pencil-square"></i>
+                                Cập nhật mật khẩu
+                            </span>
+                        </a>
+                        <br>
+                        <div class="col-md-12">
+                            <label class="labels">Kinh nghiệm</label>
+                            <input type="text" class="form-control" placeholder="kinh nghiệm" value="">
+                        </div>
+                        <br>
+                        <div class="col-md-12">
+                            <label class="labels">Mô tả bản thân</label>
+                            <textarea class="form-control" placeholder="mô tả bản thân" value=""></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cập nhật thông tin thành công</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn đã cập nhật thông tin thành công!!!
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

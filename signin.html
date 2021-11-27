@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="./vendor/bootstrap-5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./vendor/font-awesome-pro-5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/signin.css">
+    <title>Đăng nhập</title>
+</head>
+
+<body ng-app="login">
+    <div class="container" ng-controller="loginController">
+        <div class="row form-signin">
+            <div class="col-sm-9 col-md-7 col-lg-5">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-4 p-sm-5">
+                        <h5 class="card-title text-center mb-5 fw-light fs-5">Đăng nhập</h5>
+                        <form name="frmLogin" ng-submit="handleSubmit()" novalidate>
+                            <div class="form-floating mb-3">
+                                <input 
+                                    type="email" 
+                                    class="form-control" 
+                                    id="floatingInput" 
+                                    name="email"
+                                    placeholder="name@example.com" 
+                                    ng-model="email"
+                                    ng-pattern="/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/"
+                                    ng-change="clearErrorMail()"
+                                >
+                                <label for="floatingInput">Email</label>
+                                <span class="text-danger" ng-show="frmLogin.email.$invalid && frmLogin.$dirty">Vui
+                                    lòng nhập đúng định dạnh email</span>
+                                <span class="text-danger" ng-hide="existEmail">không tồn tại tài khoản email trong hệ thống</span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input 
+                                    type="password" 
+                                    class="form-control" 
+                                    id="floatingPassword" name="password"
+                                    placeholder="Password" 
+                                    ng-model="password" 
+                                    ng-minlength="6"
+                                    ng-change="clearErrorPass()"
+                                >
+                                <label for="floatingPassword">Mật khẩu</label>
+                                <span class="text-danger"
+                                    ng-show="frmLogin.password.$invalid && frmLogin.$dirty">Vui lòng nhập mật khẩu
+                                    lớn hơn 6 ký tự</span>
+                                <span class="text-danger" ng-hide="rightPass">Bạn đã nhập sai mật khẩu</span>
+                            </div>
+
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                                <label class="form-check-label" for="rememberPasswordCheck">
+                                    Nhớ mật khẩu
+                                </label>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" ng-disabled="frmLogin.$invalid || frmLogin.$pristine">Đăng nhập</button>
+                            </div>
+                            <p class="mt-2">Bạn chưa có tài khoản? <a style="text-decoration: none;" href="http://127.0.0.1:5500/asm/signup.html">Đăng ký</a></p>
+
+                            <hr class="my-4">
+                            <div class="d-grid mb-2">
+                                <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit">
+                                    <i class="fab fa-google me-2"></i> Đăng nhập với Goolge
+                                </button>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-facebook btn-login text-uppercase fw-bold" type="submit">
+                                    <i class="fab fa-facebook-f me-2"></i> Đăng nhập với Facebook
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Đăng nhập thành công</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn đã đăng nhập thành công!!!
+                </div>
+                <div class="modal-footer">
+                    <a href="http://127.0.0.1:5500/asm/index.html#!/home" class="btn btn-primary">OK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./vendor/bootstrap-5/js/bootstrap.min.js"></script>
+    <script src="./js/storage.js"></script>
+    <script>
+        var app = angular.module("login", [])
+        app.controller("loginController", function ($scope, $rootScope, $http) {
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                keyboard: false
+            })
+
+            $scope.students = []
+            $scope.existEmail = true
+            $scope.rightPass = true
+
+            $scope.clearErrorMail = () => {
+                $scope.existEmail = true
+            }
+
+            $scope.clearErrorPass = () => {
+                $scope.rightPass = true
+            }
+
+            $scope.handleSubmit = () => {
+                let email = $scope.email
+                let password = $scope.password
+
+                let checkUser = $scope.students.find(u => u.email === email)
+
+                if (checkUser) {
+                    let user =  $scope.students.find(u => u.email === email && u.password === password)
+
+                    if (user) {
+                        user = {
+                            ...user,
+                            password: ''
+                        }
+                        addUser(user)
+                        myModal.show()
+                    } else {
+                        $scope.rightPass = false
+                    }
+                } else {
+                    $scope.existEmail = false
+                }
+            }
+
+            $http.get("http://localhost:3000/students").then(
+                function (d) {
+                    $scope.students = d.data;
+                    console.log($scope.students);
+                },
+                function (e) { alert('Lỗi: ' + e.statusText) }
+            )
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-md-12 col-lg-9 col-12 article-news px-4 pt-5 px-5">
+        <h3 class="my-5 h3"><a href="#!home" class="link-info me-3"><i class="bi bi-arrow-left"></i></a>Công nghệ thông tin</h3>
+        <div class="row my-5">
+            <div class="col-md-4" ng-repeat="cate in subjects | limitTo:pageSize:start">
+                <div class="card card-subject">
+                    <a href="#!quiz/{{ cate.Id }}/{{ cate.Name }}" class=""><img src="http://127.0.0.1:5500/asm/images/logos/{{ cate.Logo }}" class="card-img-top cate-subject-img" alt="..."></a>
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="#!quiz/{{ cate.Id }}/{{ cate.Name }}" class="link-dark text-decoration-none">{{ cate.Name }}</a></h5>
+                        <p class="card-text">Some quick example text to build on the card title and make
+                            up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="Page navigation example" class="ps-4 pb-5">
+            <ul class="pagination">
+                <li class="page-item {{start === 0 && 'disabled'}}">
+                    <a class="page-link" aria-label="Previous" ng-click="previous()">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item {{ curPage === n && 'active'}}" ng-repeat="n in [] | range:pageNum">
+                    <a class="page-link" ng-click="direct(n)">{{ n }}</a>
+                </li>
+                <li class="page-item {{ curPage === pageNum && 'disabled'}}">
+                    <a class="page-link" aria-label="Next" ng-click="next()">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-12 col-lg-3 aside-right pt-5">
+        <div class="aside-right-wrapper p-4">
+            <h3 class="fw-lighter mt-5">Danh mục</h3>   
+            <ul class="list-group list-group-flush list-categories">
+                <li class="list-group-item" ng-repeat="cate in subjects"><a href="#!quiz/{{ cate.Id }}/{{ cate.Name }}" class="link-primary text-decoration-none">{{ $index+1 }}. {{ cate.Name }}</a></li>
+            </ul>
+            <h3 class="mt-5 mb-3 fw-lighter">Bài viết nổi bật</h3>
+            <div class="post-featured-container">
+                <!-- Post featured item -->
+                <div class="post-featured row">
+                    <div class="col-5 p-3">
+                        <img src="./images/p2.jpg" alt="" class="img-post-featured">
+                    </div>
+                    <div class="col-7">
+                        <div class="">
+                            <div class="title">7 thói quen của bạn trẻ thành đạt</div>
+                            <div class="my-2 info-post-featured">
+                                <span class="me-3 text-muted"><i class="fal fa-calendar-alt"></i></i>
+                                    28/06/2021</span>
+                                <br>
+                                <span class="me-3"><i class="fal fa-folders"></i></i> Kỹ năng
+                                    sống</span>
+                                <br>
+                                <span class="me-3 text-muted"><i class="fal fa-comments-alt"></i></i>
+                                    bình
+                                    luận</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Post Featured -->
+                <!-- Post featured item -->
+                <div class="post-featured row">
+                    <div class="col-5 p-3">
+                        <img src="./images/p2.jpg" alt="" class="img-post-featured">
+                    </div>
+                    <div class="col-7">
+                        <div class="">
+                            <div class="title">7 thói quen của bạn trẻ thành đạt</div>
+                            <div class="my-2 info-post-featured">
+                                <span class="me-3 text-muted"><i class="fal fa-calendar-alt"></i></i>
+                                    28/06/2021</span>
+                                <br>
+                                <span class="me-3"><i class="fal fa-folders"></i></i> Kỹ năng
+                                    sống</span>
+                                <br>
+                                <span class="me-3 text-muted"><i class="fal fa-comments-alt"></i></i>
+                                    bình
+                                    luận</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Post Featured -->
+                <!-- Post featured item -->
+                <div class="post-featured row">
+                    <div class="col-5 p-3">
+                        <img src="./images/p2.jpg" alt="" class="img-post-featured">
+                    </div>
+                    <div class="col-7">
+                        <div class="">
+                            <div class="title">7 thói quen của bạn trẻ thành đạt</div>
+                            <div class="my-2 info-post-featured">
+                                <span class="me-3 text-muted"><i class="fal fa-calendar-alt"></i></i>
+                                    28/06/2021</span>
+                                <br>
+                                <span class="me-3"><i class="fal fa-folders"></i></i> Kỹ năng
+                                    sống</span>
+                                <br>
+                                <span class="me-3 text-muted"><i class="fal fa-comments-alt"></i></i>
+                                    bình
+                                    luận</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Post Featured -->
+            </div>
+        </div>
+    </div>
+</div>

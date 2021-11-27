@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="./vendor/bootstrap-5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./vendor/font-awesome-pro-5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/signin.css">
+    <title>Đăng ký</title>
+</head>
+
+<body class="signup" ng-app="signup">
+    <div class="container" ng-controller="signupController">
+        <div class="row form-signup">
+            <div class="col-sm-9 col-md-7 col-lg-5">
+                <div class="card border-0 shadow rounded-3 my-4">
+                    <div class="card-body p-4 p-sm-5">
+                        <h5 class="card-title text-center mb-4 fw-light fs-5 fw-bold">Đăng ký</h5>
+                        <form name="frmSignup" ng-submit="frmSignup.$valid && handleSubmit()" novalidate>
+                            <div class="form-floating mb-3">
+                                <input 
+                                    type="text" 
+                                    name="username" 
+                                    class="form-control" 
+                                    id="username" 
+                                    required
+                                    placeholder="username" 
+                                    ng-minlength="8" 
+                                    ng-maxlength="30"
+                                    ng-model="username"
+                                >
+                                <label for="floatingInput">Username</label>
+                                <span class="text-danger" ng-show="frmSignup.username.$invalid && frmSignup.$submitted">Nhập username từ 8 đến 30 ký tự</span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input 
+                                    type="text" 
+                                    required 
+                                    name="fullname" 
+                                    class="form-control" 
+                                    id="fullname" 
+                                    placeholder="fullname"
+                                    ng-model="fullname"
+                                >
+                                <label for="floatingInput">Họ và tên</label>
+                                <span class="text-danger" ng-show="frmSignup.fullname.$invalid && frmSignup.$submitted">Vui lòng nhập họ và tên</span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    required 
+                                    ng-pattern="/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/" 
+                                    class="form-control" 
+                                    id="email" 
+                                    placeholder="name@example.com"
+                                    ng-model="email"
+                                    ng-change="clearErrorEmail()"
+                                >
+                                <label for="floatingInput">Email</label>
+                                <span class="text-danger" ng-show="frmSignup.email.$invalid && frmSignup.$submitted">Vui lòng nhập đúng định dạng email</span>
+                                <span class="text-danger" ng-show="existEmail">Đã tồn tại email trong hệ thống</span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input 
+                                    type="password" 
+                                    class="form-control" 
+                                    id="floatingPassword" 
+                                    required
+                                    name="password" 
+                                    ng-minlength="6" 
+                                    ng-maxlength="20"
+                                    placeholder="Password"
+                                    ng-model="password"
+                                > 
+                                <label for="floatingPassword">Mật khẩu</label>
+                                <span class="text-danger" ng-show="frmSignup.password.$invalid && frmSignup.$submitted">Vui lòng nhập mật khẩu từ 6 đến 20 ký tự</span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input 
+                                    type="password" 
+                                    required
+                                    name="confirm-password"
+                                    class="form-control" 
+                                    id="confirmPassword"
+                                    placeholder="Password"
+                                    ng-model="confirmPassword"
+                                >
+                                <label for="floatingPassword">Nhập lại mật khẩu</label>
+                                <span class="text-danger" ng-show="password !== confirmPassword && frmSignup.$submitted">Mật khẩu nhập lại không trùng khớp</span>
+                            </div>
+                            <label for="">Giới tính</label>
+                            <div class="form-group mb-3">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" required ng-model="gender"
+                                        value="male">
+                                    <label class="form-check-label" for="inlineRadio1">Nam</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" required ng-model="gender"
+                                        value="female">
+                                    <label class="form-check-label" for="inlineRadio2">Nữ</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio3" required ng-model="gender"
+                                        value="other" >
+                                    <label class="form-check-label" for="inlineRadio3">Khác </label>
+                                </div>
+                                <br>
+                                <span class="text-danger" ng-show="frmSignup.gender.$invalid && frmSignup.$submitted">Vui lòng chọn giới tính</span>
+                            </div>
+                            <label for="">Ngày sinh</label>
+                            <div class="form-group mt-1 mb-3">
+                                <input type="date" id="birthday" name="birthday" class="form-control" ng-model="birthday" required >
+                                <span class="text-danger" ng-show="frmSignup.birthday.$invalid && frmSignup.$submitted">Vui lòng chọn ngày sinh</span>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" >Đăng
+                                    ký</button>
+                            </div>
+                            <p class="mt-2">Bạn đã có tài khoản? <a style="text-decoration: none;" href="http://127.0.0.1:5500/asm/signin.html">Đăng nhập</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Đăng ký thành công</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn đã đăng ký thành công!!!
+                </div>
+                <div class="modal-footer">
+                    <a href="http://127.0.0.1:5500/asm/signin.html" class="btn btn-primary">OK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./vendor/bootstrap-5/js/bootstrap.min.js"></script>
+    <script>
+        var app = angular.module("signup", [])
+        app.controller("signupController", function ($scope, $rootScope, $http) {
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                keyboard: false
+            })
+
+            $scope.existEmail = false
+            
+            $scope.clearErrorEmail = () => {
+                $scope.existEmail = false
+            }
+
+            $scope.handleSubmit = () => {
+                let email = $scope.email
+                
+                let checkExistEmail = $scope.students.find(u => u.email === email)
+
+                if (checkExistEmail) {
+                    $scope.existEmail = true
+                } else {
+                    let newUser = {
+                        username: $scope.username,
+                        password: $scope.password,
+                        fullname: $scope.fullname,
+                        email: $scope.email,
+                        gender: $scope.gender,
+                        birthday: $scope.birthday,
+                    }
+                    $http({
+                        url: 'http://localhost:3000/students',
+                        method: "POST",
+                        data: JSON.stringify(newUser)
+                    })
+                    .then(function(r) {
+                        $scope.students = r.data;
+                    }, 
+                    function(e) { // optional
+                        alert('Lỗi: ' + e.statusText)
+                    });
+
+                    myModal.show()
+                }
+            }
+
+            $http.get("http://localhost:3000/students").then(
+                function (d) {
+                    $scope.students = d.data;
+                },
+                function (e) { alert('Lỗi: ' + e.statusText) }
+            )
+
+        })
+    </script>
+</body>
+
+</html>

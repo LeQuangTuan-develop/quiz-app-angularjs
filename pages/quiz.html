@@ -1,0 +1,42 @@
+<section class="pt-5 pb-3">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-4">
+                <div class="mb-3"></div>
+                <div class="img-subject">
+                    <img src="http://127.0.0.1:5500/asm/images/logos/{{ subject.Logo }}"  alt="">
+                </div>
+                <!-- </div>  -->
+            </div>
+            <div class="col-md-8">
+                <h3 class="display-6 fw-bolder">{{ tenMH }}</h3>
+                <div class="fs-5 mb-3 mt-4">
+                    <span>Số câu hỏi: {{ quizs.length }}</span>
+                </div>
+                <div class="fs-5 mb-3">
+                    <span>thời gian: {{ subject.time }} phút</span>
+                </div>
+                <div class="small mb-1">ID: {{ subject.Id }}</div>
+                <p class="lead mt-3">
+                    About This Course <br>
+                    Include your long course description here. The long course description should contain 150-400 words. <br>
+                    
+                    This is paragraph 2 of the long course description. Add more paragraphs as needed. Make sure to enclose them in paragraph tags. <br>
+                    
+                    Requirements <br>
+                    Add information about the skills and knowledge students need to take this course.
+                </p>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary flex-shrink-0 me-2" type="button">
+                        <i class="bi bi-eyeglasses"></i>
+                        Xem kết quả
+                    </button>
+                    <a class="btn btn-outline-success flex-shrink-0" ng-click="startQuiz()" href="http://127.0.0.1:5500/asm/test.html">
+                        <i class="bi bi-skip-start-circle"></i>
+                        Bắt đầu làm bài
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

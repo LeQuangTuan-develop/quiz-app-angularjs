@@ -1,0 +1,93 @@
+
+<div class="container containerStep mt-5">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div id="regForm">
+                <h1 id="register">Đổi mật khẩu</h1>
+                <div class="all-steps" id="all-steps">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+                <div class="tab">
+                    <h3>Email:</h3>
+                    <p>
+                        <form name="frmEmail" id="frmEmail" novalidate ng-submit="frmEmail.$valid && handleEmail()">
+                            <div class="">
+                                <input 
+                                    type="email" 
+                                    placeholder="Nhập địa chỉ email" 
+                                    required 
+                                    name="email" 
+                                    ng-model="email" 
+                                    ng-pattern="/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/" 
+                                >
+                                <span class="text-danger h6" ng-show="frmEmail.email.$invalid && frmEmail.$submitted">Vui lòng nhập đúng định dạng email</span>
+                                <span class="text-danger h6" ng-show="errorEmail">Bạn đã nhập sai email</span>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="ms-5 mt-3" style="width: 120px;">Gửi</button>
+                            </div>
+                        </form>
+                    </p>
+                </div>
+                <div class="tab">
+                    <p>
+                        <form name="frmCode" novalidate ng-submit="frmCode.$valid && handleCode()">
+                            <div class="">
+                                <input 
+                                    type="number" 
+                                    required 
+                                    placeholder="Nhập 6 số được gửi trong email của bạn" 
+                                    name="code" 
+                                    ng-model="code" 
+                                    ng-minLength="6" 
+                                    ng-maxLength="6"
+                                >
+                                <span class="text-danger h6" ng-show="frmCode.code.$invalid && frmCode.$submitted">Vui lòng nhập mã có 6 chữ số</span>
+                                <span class="text-danger h6" ng-show="errorCode">Bạn đã nhập sai mã code</span>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="ms-5 mt-3" style="width: 120px;">Gửi</button>
+                            </div>
+                        </form>
+                    </p>
+                </div>
+                <div class="tab">
+                    <form name="frmPass" novalidate ng-submit="frmPass.$valid && handlePass()">
+                        <p>
+                            <input 
+                                placeholder="Nhập mật khẩu mới" 
+                                type="password" 
+                                name="newPass" 
+                                ng-minLength="6" 
+                                ng-model="newPass"
+                                required
+                            >
+                            <span class="text-danger h6" ng-show="frmPass.newPass.$invalid && frmPass.$submitted">Vui lòng nhập mật khẩu tối thiểu 6 ký tự</span>
+                        </p>
+                        <p>
+                            <input 
+                                placeholder="Nhập lại mật khẩu mới" 
+                                type="password" 
+                                name="confirm-password" 
+                                ng-model="confirmPass"
+                                required
+                            >
+                            <span class="text-danger h6" ng-show="newPass !== confirmPass && frmPass.$submitted">Mật khẩu nhập lại không trùng khớp</span>
+                        </p>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="ms-5 mt-3" style="width: 120px;">Gửi</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="thanks-message text-center" id="text-message">
+                    <img src="./images/success.png" width="100" class="mb-4">
+                    <h3>Cập nhật mật khẩu thành công!</h3>
+                    <a href="#!account" class="btn btn-info btn-link mt-4">Tài khoản của bạn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+body {
+    background-image: url(../images/login.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+body.signup {
+    margin-top: 0;
+}
+
+body::-webkit-scrollbar {
+    width: 0.6em;
+    padding: 0.1em;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border: 2px solid transparent;
+    border-radius: 100px;
+    background-clip: content-box;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(110, 110, 110);
+}
+
+.btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+}
+
+.btn-google {
+    color: white !important;
+    background-color: #ea4335;
+}
+
+.btn-facebook {
+    color: white !important;
+    background-color: #3b5998;
+}

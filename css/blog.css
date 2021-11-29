@@ -220,7 +220,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 .cate-subject-img {
     height: 200px;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 1.25rem;
 }
 
@@ -464,8 +464,9 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .img-subject img {
-    width: 200px;
-    height: 200px;
+    width: 350px;
+    border-radius: 10px;
+    /* height: 200px; */
 }
 
 /* test */

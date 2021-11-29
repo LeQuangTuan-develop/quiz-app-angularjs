@@ -1,5 +1,5 @@
-import storage from './firebase.js'
-import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-storage.js";
+// import storage from './firebase.js'
+import { ref, uploadBytes, getDownloadURL, getStorage } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-storage.js";
 var app = angular.module("quizApp", ['ngRoute'])
 
 app.config($routeProvider => {
@@ -100,7 +100,7 @@ app.controller("cateCtrl", function ($scope, $http) {
 
 app.controller("accountCtrl", function ($scope, $rootScope, $http) {
     $rootScope.user = getUser();
-    $scope.avatar = null
+    let file = null
     var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
         keyboard: false
     })
@@ -111,7 +111,7 @@ app.controller("accountCtrl", function ($scope, $rootScope, $http) {
     inputFile.addEventListener('change', (e) => {
         if (e.target.files[0]) {
             avatar.src = URL.createObjectURL(e.target.files[0])
-            $scope.avatar = e.target.files[0]
+            file = e.target.files[0]
         }
     })
 
@@ -119,20 +119,20 @@ app.controller("accountCtrl", function ($scope, $rootScope, $http) {
 
     $scope.handleSubmit = async () => {
         let urlImg = null
-        if ($scope.avatar) {
+        if (file) {
             console.log("upload file to firebase");
-
-            var storageRef = ref(storage, `images/test/${$scope.avatar.name}`);
+            const storage = getStorage();
+            var storageRef = ref(storage, `images/test/${file.name}`);
             var metaData = {
                 contentType: 'image/*'
             };
-            await uploadBytes(storageRef, $scope.avatar, metaData)
+            await uploadBytes(storageRef, file, metaData)
                 .then((snapshot) => {
                     console.log('Uploaded successfully');
                 })
                 .catch((error) => error);
 
-            await getDownloadURL(ref(storage, `images/test/${$scope.avatar.name}`))
+            await getDownloadURL(ref(storage, `images/test/${file.name}`))
                 .then( (url) => {
                     urlImg = url;
                 })

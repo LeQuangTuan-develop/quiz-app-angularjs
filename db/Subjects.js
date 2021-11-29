@@ -10,7 +10,7 @@
         "Id": "ADBS",
         "time": 30,
         "Name": "Lập trình Android cơ bản",
-        "Logo": "ADBS.jpg",
+        "Logo": "ADBS.png",
         "img": "https://cdn.fullstack.edu.vn/f8-learning/courses/12.png"
     },
     {
@@ -80,35 +80,35 @@
         "Id": "JAAV",
         "time": 60,
         "Name": "Lập trình Java nâng cao",
-        "Logo": "JAAV.png",
+        "Logo": "JAAV.jpg",
         "img": "https://cdn.fullstack.edu.vn/f8-learning/courses/4.png"
     },
     {
         "Id": "JABS",
         "time": 90,
         "Name": "Lập trình hướng đối tượng với Java",
-        "Logo": "JABS.png",
+        "Logo": "JABS.jpg",
         "img": "https://cdn.fullstack.edu.vn/f8-learning/courses/4.png"
     },
     {
         "Id": "JSPR",
         "time": 30,
         "Name": "Lập trình JavaScript",
-        "Logo": "JSPR.png",
+        "Logo": "JSPR.jpg",
         "img": "https://cdn.fullstack.edu.vn/f8-learning/courses/4.png"
     },
     {
         "Id": "LAYO",
         "time": 40,
         "Name": "Thiết kế layout",
-        "Logo": "LAYO.jpg",
+        "Logo": "LAYO.jpeg",
         "img": "https://cdn.fullstack.edu.vn/f8-learning/courses/4.png"
     },
     {
         "Id": "MOWE",
         "time": 20,
         "Name": "Thiết kế web cho điện thoại di động",
-        "Logo": "MOWE.png",
+        "Logo": "MOWE.jpg",
         "img": "https://cdn.fullstack.edu.vn/f8-learning/courses/4.png"
     },
     {
@@ -129,7 +129,7 @@
         "Id": "VBPR",
         "time": 60,
         "Name": "Lập trình VB.NET",
-        "Logo": "VBPR.png",
+        "Logo": "VBPR.jpg",
         "img": "https://cdn.fullstack.edu.vn/f8-learning/courses/4.png"
     },
     {
